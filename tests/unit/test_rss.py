@@ -1,7 +1,7 @@
 import feedparser
 
 from app.domain.models import Source, SourceType
-from app.sources.rss import fetch_articles
+from app.sources.rss import RSSReader
 
 
 def test_fetch_articles(monkeypatch) -> None:
@@ -32,7 +32,8 @@ def test_fetch_articles(monkeypatch) -> None:
         type=SourceType.RSS,
     )
 
-    articles = fetch_articles(source)
+    reader = RSSReader()
+    articles = reader.fetch_articles(source)
 
     assert len(articles) == 1
     assert articles[0].title == "AI makes another breakthrough"
